@@ -388,6 +388,10 @@ This project demonstrates real-world data engineering patterns used by companies
 - ✅ End-to-end data pipeline integration
 - ✅ Real-time data visualization with Power BI
 
+## XI. Output
+![alt text](screenshots/bidding.png)
+![alt text](screenshots/db.png)
+![alt text](screenshots/powerBI.png)
 ---
 
 **Last Updated:** August 2026
