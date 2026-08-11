@@ -71,7 +71,7 @@ def delivery_report(err, msg):
     if err is not None:
         print(f"Delivery failed: {err}")
         return
-    print(f"Successfully produced to {msg.topic()} [{msg.partition()}] @ offset {msg.offset()}")
+    print(f"Produced to {msg.topic()} [{msg.partition()}] @ offset {msg.offset()}")
 
 @app.route("/", methods=['GET', 'POST'])
 def bid():
