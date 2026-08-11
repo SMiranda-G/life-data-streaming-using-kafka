@@ -5,8 +5,7 @@ import config
 import json
 from confluent_kafka import Consumer
 
-API_KEY, ENDPOINT_SCHEMA_URL, API_SECRET_KEY, BOOTSTRAP_SERVER, SECURITY_PROTOCOL, SSL_MECHANISM, SCHEMA_REGISTRY_API_KEY, SCHEMA_REGISTRY_API_SECRET = config.config_values()
-
+BOOTSTRAP_SERVER, SECURITY_PROTOCOL = config.config_values()
 def sasl_conf():
     return {
         'bootstrap.servers': BOOTSTRAP_SERVER,
