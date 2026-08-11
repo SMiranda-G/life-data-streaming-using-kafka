@@ -1,0 +1,5 @@
+BOOTSTRAP_SERVER = 'localhost:9092'
+SECURITY_PROTOCOL = 'PLAINTEXT'
+
+def config_values():
+    return BOOTSTRAP_SERVER, SECURITY_PROTOCOL
