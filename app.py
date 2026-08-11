@@ -46,7 +46,7 @@ def get_highest_bid():
         print(traceback.format_exc())
         return 0
 
-# NEW: Kafka configuration
+# KAFKA CONFIGURATION
 def sasl_conf():
     """
     Configure Kafka connection settings using SASL authentication.
@@ -59,7 +59,7 @@ def sasl_conf():
         'security.protocol': SECURITY_PROTOCOL,
     }
 
-# NEW: Delivery report callback
+# DELIVERY REPORT CALLBACK
 def delivery_report(err, msg):
     """
     Callback function that reports the status of message delivery to Kafka.
@@ -74,6 +74,7 @@ def delivery_report(err, msg):
     print(f"Produced to {msg.topic()} [{msg.partition()}] @ offset {msg.offset()}")
 
 @app.route("/", methods=['GET', 'POST'])
+
 def bid():
     """
     Handle bid submissions and display the bidding interface.
@@ -126,7 +127,7 @@ def bid():
 
         print(f"Producing to Kafka: {response}")
 
-        # NEW: Produce to Kafka
+        # PRODUCE TO KAFKA
         try:
             producer = Producer(sasl_conf())
             print("Kafka Producer created")
