@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Kafka data
+kafka-data/
+*.pid
+
+# Output files
+output.csv
+
+# Environment
+.env
+*.env
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
