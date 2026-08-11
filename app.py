@@ -10,7 +10,6 @@ import traceback
 
 app = Flask(__name__)
 
-# SIMPLIFIED: Only get what we need
 BOOTSTRAP_SERVER, SECURITY_PROTOCOL = config.config_values()
 
 print("=" * 50)
@@ -47,6 +46,7 @@ def get_highest_bid():
         print(traceback.format_exc())
         return 0
 
+# NEW: Kafka configuration
 def sasl_conf():
     """
     Configure Kafka connection settings using SASL authentication.
@@ -59,6 +59,7 @@ def sasl_conf():
         'security.protocol': SECURITY_PROTOCOL,
     }
 
+# NEW: Delivery report callback
 def delivery_report(err, msg):
     """
     Callback function that reports the status of message delivery to Kafka.
@@ -85,6 +86,7 @@ def bid():
     """
     print("\n" + "=" * 50)
     print(f"Request received: {request.method}")
+    print(f"Request args: {request.args}")
     
     result = get_highest_bid()
 
@@ -97,8 +99,21 @@ def bid():
         bid_ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         msg_key = str(uuid4())
 
+        print(f"Name: {name}")
+        print(f"Price: {price}")
+        print(f"Timestamp: {bid_ts}")
+        print(f"Message Key: {msg_key}")
+
+        # Auto-generate if empty (for testing)
+        if not name or not price:
+            print("Empty fields detected - auto-generating values")
+            name = random.choice(['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff', 'Gg', 'Hh', 'Ii', 'Jj'])
+            price = str(round(random.random() * 10000))
+            print(f"Auto-generated: Name={name}, Price={price}")
+
         try:
             price_int = int(price)
+            print(f"Price converted to int: {price_int}")
         except ValueError:
             print(f"Failed to convert price to int: {price}")
             price_int = 0
@@ -109,8 +124,13 @@ def bid():
             'bid_ts': bid_ts
         }
 
+        print(f"Producing to Kafka: {response}")
+
+        # NEW: Produce to Kafka
         try:
             producer = Producer(sasl_conf())
+            print("Kafka Producer created")
+            
             producer.produce(
                 topic='auction',
                 key=msg_key,
@@ -123,9 +143,16 @@ def bid():
 
         except Exception as e:
             print(f"Kafka error: {e}")
+            print(traceback.format_exc())
             return redirect(url_for('bid', success='false'))
 
+    # GET request
+    print("Processing GET request...")
     bid_added = request.args.get('success') == 'true'
+    print(f"Bid added flag: {bid_added}")
+    print(f"Highest bid: {result}")
+    print("=" * 50)
+    
     return render_template('index.html', bid_added=bid_added, highest_bid=result)
 
 if __name__ == '__main__':
