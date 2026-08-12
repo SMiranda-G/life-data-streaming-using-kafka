@@ -1,6 +1,3 @@
-# README.md - Complete Project Documentation
-
-
 # Live Data Streaming Using Kafka
 
 > **Live Data Streaming Project:** Kafka + Flask + MySQL + Power BI
